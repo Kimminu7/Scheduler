@@ -8,7 +8,7 @@
 
 ### ※ ERD
 
-![img_1.png](img_1.png)
+![img_2.png](img_2.png)
 
 - [ ] ERD CLOUD 사이트 에서 구성함.
 
@@ -16,11 +16,11 @@
 
 ```sql
 CREATE TABLE `user` (
-    `id`	INT	NOT NULL,
-    `title`	VARCHAR(30)	NULL,
-    `contents`	VARCHAR(255)	NULL,
-    `password`	INT	NULL,
-    `created_at`	DATE	NULL,
-    `updated_at`	DATE	NULL
+    `id`  INT NOT NULL,
+    `name` VARCHAR(20) NULL,
+    `contents` VARCHAR(255) NULL,
+    `password` INT NULL,
+    `created_at` DATE NULL,
+    `updated_at` DATE NULL
 );
 ```

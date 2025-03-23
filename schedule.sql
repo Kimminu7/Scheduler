@@ -1,6 +1,6 @@
 CREATE TABLE `user` (
     `id`	INT	NOT NULL,
-    `title`	VARCHAR(30)	NULL,
+    `name`	VARCHAR(20)	NULL,
     `contents`	VARCHAR(255)	NULL,
     `password`	INT	NULL,
     `created_at`	DATE	NULL,
