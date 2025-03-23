@@ -1,6 +1,6 @@
 # Scheduler
 
-## Lv0 API 명세 및 ERD 작성
+## Lv 0. API 명세 및 ERD 작성
 
 ### 일정 관리 API 명세서
 
@@ -8,7 +8,8 @@
 
 ### ERD
 
-- [ ] ERD CLOUD 사이트 에서 구성함.
 ![img_1.png](img_1.png)
+
+- [ ] ERD CLOUD 사이트 에서 구성함.
 
 ### SQL 작성
