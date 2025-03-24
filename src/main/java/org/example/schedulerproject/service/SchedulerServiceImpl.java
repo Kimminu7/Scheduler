@@ -1,7 +1,7 @@
 package org.example.schedulerproject.service;
 
-import org.example.schedulerproject.dto.SchedulerRequestDto;
-import org.example.schedulerproject.dto.SchedulerResponseDto;
+import org.example.schedulerproject.dto.ScRequestDto;
+import org.example.schedulerproject.dto.ScResponseDto;
 import org.example.schedulerproject.entity.Scheduler;
 import org.example.schedulerproject.repository.SchedulerRepository;
 import org.springframework.stereotype.Service;
@@ -9,15 +9,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
 
-    private final SchedulerRepository schedulerRepository;
+    private final SchedulerRepository SchedulerRepository;
 
     public SchedulerServiceImpl(SchedulerRepository schedulerRepository) {
-        this.schedulerRepository = schedulerRepository;
+        this.SchedulerRepository = schedulerRepository;
     }
 
+    // 스케줄 생성
     @Override
-    public SchedulerResponseDto addSchedule(SchedulerRequestDto dto) {
-        Scheduler scheduler = new Scheduler(dto.getName(), dto.getContents(), dto.getCreated_at(), dto.getPassword());
-        return schedulerRepository.addSchedule(scheduler);
+    public ScResponseDto addSchedule(ScRequestDto dto) {
+        // 요청 받은 데이터를 Entity로 변환.
+        Scheduler scheduler = new Scheduler(dto.getName(), dto.getContents(), dto.getPassword());
+
+        return SchedulerRepository.addSchedule(scheduler);
     }
+
 }

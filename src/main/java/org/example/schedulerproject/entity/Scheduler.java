@@ -2,10 +2,14 @@ package org.example.schedulerproject.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Scheduler {
 
@@ -13,13 +17,14 @@ public class Scheduler {
     private String name;
     private String contents;
     private String password;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    public Scheduler(String name, String contents, LocalDateTime createdAt, String password) {
+    public Scheduler(String name, String contents, String password) {
         this.name = name;
         this.contents = contents;
-        this.created_at = createdAt;
         this.password = password;
+        this.createdAt = LocalDateTime.now();
     }
+
 }

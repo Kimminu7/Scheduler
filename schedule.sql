@@ -1,8 +1,8 @@
-CREATE TABLE `user` (
-    `id`	INT	NOT NULL,
+CREATE TABLE `scheduler` (
+    `id` BIGINT	NOT NULL,
     `name`	VARCHAR(20)	NULL,
     `contents`	VARCHAR(255)	NULL,
-    `password`	INT	NULL,
-    `created_at`	DATE	NULL,
-    `updated_at`	DATE	NULL
+    `password`	VARCHAR(20)	NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL
 );
