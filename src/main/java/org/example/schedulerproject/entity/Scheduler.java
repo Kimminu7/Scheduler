@@ -33,6 +33,6 @@ public class Scheduler {
         this.name = name;
         this.contents = contents;
         this.password = password;
-        updatedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 }

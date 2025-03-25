@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -46,7 +47,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     public String editSchedule(Long id, String name, String contents, String password) {
 
         ScResponseDto findScheduler = schedulerRepository.findById(id);
-        Scheduler updatedSchedule = new Scheduler(findScheduler.getId(), findScheduler.getName(), findScheduler.getContents(), password);
+        Scheduler updatedSchedule = new Scheduler(findScheduler.getId(), name, contents, password);
 
         return schedulerRepository.editSchedule(updatedSchedule);
     }

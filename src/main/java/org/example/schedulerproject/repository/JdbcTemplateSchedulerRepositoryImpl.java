@@ -72,6 +72,7 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
                     ps.setLong(4, updatedSchedule.getId());
                 }
         );
+
         return "수정 완료";
     }
 

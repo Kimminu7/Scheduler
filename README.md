@@ -8,19 +8,19 @@
 
 ### ※ ERD
 
-![img_2.png](img_2.png)
+![img.png](img.png)
 
 - [ ] ERD CLOUD 사이트 에서 구성함.
 
 ### ※ SQL 작성
 
 ```sql
-CREATE TABLE `user` (
-    `id`  INT NOT NULL,
-    `name` VARCHAR(20) NULL,
-    `contents` VARCHAR(255) NULL,
-    `password` INT NULL,
-    `created_at` DATE NULL,
-    `updated_at` DATE NULL
+CREATE TABLE `scheduler` (
+     `id` BIGINT	AUTO_INCREMENT PRIMARY KEY NOT NULL,
+     `name`	VARCHAR(20)	NULL,
+     `contents`	VARCHAR(255)	NULL,
+     `password`	VARCHAR(20)	NULL,
+     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL,
+     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL
 );
 ```
