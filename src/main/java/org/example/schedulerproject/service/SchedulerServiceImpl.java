@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
@@ -38,11 +38,18 @@ public class SchedulerServiceImpl implements SchedulerService {
     // 단건 조회
     @Override
     public ScResponseDto findById(Long id) {
-        return schedulerRepository.findByid(id);
+        return schedulerRepository.findById(id);
     }
 
     // 수정
+    @Override
+    public String editSchedule(Long id, String name, String contents, String password) {
 
+        ScResponseDto findScheduler = schedulerRepository.findById(id);
+        Scheduler updatedSchedule = new Scheduler(findScheduler.getId(), findScheduler.getName(), findScheduler.getContents(), password);
+
+        return schedulerRepository.editSchedule(updatedSchedule);
+    }
 
     // 삭제
     @Override
@@ -54,4 +61,7 @@ public class SchedulerServiceImpl implements SchedulerService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+
+
 }

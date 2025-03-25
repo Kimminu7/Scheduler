@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
@@ -56,13 +55,25 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
     // 단건 조회
     // "SELECT * FROM scheduler WHERE id = ?"
     @Override
-    public ScResponseDto findByid(Long id) {
+    public ScResponseDto findById(Long id) {
         return jdbcTemplate.queryForObject("SELECT * FROM scheduler WHERE id = ?", schedulerRowMapper(), id);
     }
 
     // 수정
-    // "UPDATE scheduler SET title = ?, contents = ?, password = ?, CreatedAt = ? WHERE id = ?"
-
+    // "UPDATE scheduler SET name = ?, contents = ?, password = ? WHERE id = ?"
+    @Override
+    public String editSchedule(Scheduler updatedSchedule) {
+        String sql = "UPDATE scheduler SET name = ?, contents = ?, password = ? WHERE id = ?";
+        int result = jdbcTemplate.update(sql,
+                ps -> {
+                    ps.setString(1, updatedSchedule.getName());
+                    ps.setString(2, updatedSchedule.getContents());
+                    ps.setString(3, updatedSchedule.getPassword());
+                    ps.setLong(4, updatedSchedule.getId());
+                }
+        );
+        return "수정 완료";
+    }
 
     // 삭제
     // "DELETE FROM scheduler WHERE id = ?"
@@ -70,13 +81,6 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
     public int deleteSchedule(Long id) {
         return jdbcTemplate.update("DELETE FROM scheduler WHERE id = ?", id);
     }
-
-
-
-    // 단건 조회
-   // public ScResponseDto findById(Long id) {
-        String sql = "SELECT id, title, contents, created_at, updated_at FROM Scheduler WHERE id = ?";
-//        return jdbcTemplate.queryForObject(sql, schedulerRowMapper(), id);
 
         /**
          * 다건조회
@@ -86,7 +90,6 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
          * DELETE FROM scheduler WHERE id = ?
          * jdbcTemplate.update(sql, ...);
          */
-    //}
 
 
     private RowMapper<ScResponseDto> schedulerRowMapper() {

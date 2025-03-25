@@ -4,7 +4,6 @@ import org.example.schedulerproject.dto.ScResponseDto;
 import org.example.schedulerproject.entity.Scheduler;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SchedulerRepository {
 
@@ -15,10 +14,10 @@ public interface SchedulerRepository {
     List<ScResponseDto> findAll();
 
     // 단건 조회
-    ScResponseDto findByid(Long id);
+    ScResponseDto findById(Long id);
 
     // 수정
-
+    String editSchedule(Scheduler updatedSchedule);
 
     // 삭제
     int deleteSchedule(Long id);

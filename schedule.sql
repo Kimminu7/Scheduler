@@ -1,5 +1,5 @@
 CREATE TABLE `scheduler` (
-    `id` BIGINT	NOT NULL auto_increment primary key,
+    `id` BIGINT	AUTO_INCREMENT PRIMARY KEY NOT NULL,
     `name`	VARCHAR(20)	NULL,
     `contents`	VARCHAR(255)	NULL,
     `password`	VARCHAR(20)	NULL,

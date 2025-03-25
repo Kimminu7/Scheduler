@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Scheduler {
 
-
     private Long id;
     private String name;
     private String contents;
@@ -29,4 +28,11 @@ public class Scheduler {
         this.createdAt = LocalDateTime.now();
     }
 
+    public Scheduler(Long id, String name, String contents, String password) {
+        this.id = id;
+        this.name = name;
+        this.contents = contents;
+        this.password = password;
+        updatedAt = LocalDateTime.now();
+    }
 }

@@ -24,12 +24,4 @@ public class ScResponseDto {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = null;
     }
-
-    public ScResponseDto(Scheduler scheduler) {
-        this.id = scheduler.getId();
-        this.name = scheduler.getName();
-        this.contents = scheduler.getContents();
-        this.createdAt = scheduler.getCreatedAt();
-        this.updatedAt = scheduler.getUpdatedAt();
-    }
 }

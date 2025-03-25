@@ -15,13 +15,11 @@ public interface SchedulerService {
     //  전체 조회
     List<ScResponseDto> findAll();
 
-
-
     //  단건 조회
     ScResponseDto findById(Long id);
 
     //  수정
-
+    String editSchedule(Long id, String name, String contents, String password);
 
     //  삭제
     void deleteSchedule(Long id);

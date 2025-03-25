@@ -39,9 +39,14 @@ public class ScheduleController {
         return new ResponseEntity<>(schedulerService.findById(id), HttpStatus.OK);
     }
 
-
-    // 수정
-
+    // 수정 ????
+    @PutMapping("/{id}")
+    public ResponseEntity<String> editSchedule(
+            @PathVariable Long id,
+            @RequestBody ScRequestDto dto
+    ) {
+        return new ResponseEntity<>(schedulerService.editSchedule(id, dto.getName(), dto.getContents(), dto.getPassword()), HttpStatus.OK);
+    }
 
     // 삭제
     @DeleteMapping("/{id}")
