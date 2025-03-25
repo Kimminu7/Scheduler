@@ -9,7 +9,10 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -24,6 +27,7 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
     @Override
     public ScResponseDto addSchedule(Scheduler scheduler) {
         String sql = "INSERT INTO scheduler (name, contents, password) VALUES(?, ?, ?)";
+        // 구글링 해서 찾은 방식.
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
@@ -40,40 +44,34 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
         //"INSERT INTO schedulers (name, contents, password)   VALUES (?, ? ,?)"
     }
 
-
     // 전체 조회
-    @Override
-    public ScResponseDto findAll() {
-        String sql = "SELECT * FROM scheduler";
-
-        return null;
-    }
     // "SELECT * FROM scheduler"
+    @Override
+    public List<ScResponseDto> findAll() {
+
+        return jdbcTemplate.query("SELECT * FROM scheduler", schedulerRowMapper());
+    }
 
 
     // 단건 조회
-    // "SELECT * FROM WHERE id = ?"
+    // "SELECT * FROM scheduler WHERE id = ?"
+    @Override
+    public ScResponseDto findByid(Long id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM scheduler WHERE id = ?", schedulerRowMapper(), id);
+    }
 
     // 수정
     // "UPDATE scheduler SET title = ?, contents = ?, password = ?, CreatedAt = ? WHERE id = ?"
 
+
     // 삭제
     // "DELETE FROM scheduler WHERE id = ?"
+    @Override
+    public int deleteSchedule(Long id) {
+        return jdbcTemplate.update("DELETE FROM scheduler WHERE id = ?", id);
+    }
 
 
-//    @Override
-//    public ResponseDto findOneTodo(Long id){
-//        String sql = "SELECT * FROM todo WHERE id = ?";
-//        return jdbcTemplate.queryForObject(sql, (rs, rowNum) ->
-//                new ResponseDto(
-//                        rs.getString("userName"),
-//                        rs.getString("todo"),
-//                        rs.getDate("doDate"),
-//                        rs.getTimestamp("createDate").toLocalDateTime(),
-//                        rs.getTimestamp("updateDate").toLocalDateTime()
-//                ), id
-//        );
-//    }
 
     // 단건 조회
    // public ScResponseDto findById(Long id) {
@@ -90,28 +88,21 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
          */
     //}
 
-//    public RowMapper<ScResponseDto> schedulerRowMapper() {
-//        return (rs, rowNum) -> {
-//            ScResponseDto scheduler = new ScResponseDto(
-//                    rs.getLong("id"),
-//                    rs.getString("title"),
-//                    rs.getString("contents"),
-//                    rs.getTimestamp("created_at").toLocalDateTime(),
-//                    rs.getTimestamp("updated_at").toLocalDateTime()
-//            );
-//        };
-//    }
-//
 
-    private RowMapper<Scheduler> schedulerRowMapper() {
-        return (rs, rowNum) -> {
-            Scheduler scheduler = new Scheduler();
-            scheduler.setId(rs.getLong("id"));
-            scheduler.setName(rs.getString("name"));
-            scheduler.setPassword(rs.getString("password"));
-            scheduler.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
-            scheduler.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
-            return scheduler;
+    private RowMapper<ScResponseDto> schedulerRowMapper() {
+
+        return new RowMapper<ScResponseDto>() {
+            @Override
+            public ScResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new ScResponseDto(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("contents"),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getTimestamp("updated_at").toLocalDateTime()
+                );
+            }
         };
     }
+
 }

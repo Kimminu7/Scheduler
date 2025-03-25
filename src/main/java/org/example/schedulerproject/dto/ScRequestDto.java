@@ -1,7 +1,7 @@
 package org.example.schedulerproject.dto;
 
 import lombok.Getter;
-import java.time.LocalDateTime;
+
 
 @Getter
 public class ScRequestDto {

@@ -3,19 +3,26 @@ package org.example.schedulerproject.repository;
 import org.example.schedulerproject.dto.ScResponseDto;
 import org.example.schedulerproject.entity.Scheduler;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface SchedulerRepository {
 
-    // 메모를 생성하는 Insert
+    // 생성
     ScResponseDto addSchedule(Scheduler scheduler);
 
-    // 메모를 조회하는 Select
-    ScResponseDto findAll();
+    // 전체 조회
+    List<ScResponseDto> findAll();
 
-    // 메모를 조회하는 Select
+    // 단건 조회
+    ScResponseDto findByid(Long id);
+
+    // 수정
 
 
-    // 메모를 수정하는 Update
+    // 삭제
+    int deleteSchedule(Long id);
 
 
-    // 메모를 삭제하는 Delete
+
 }

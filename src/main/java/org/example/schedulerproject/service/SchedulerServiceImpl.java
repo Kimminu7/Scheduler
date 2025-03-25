@@ -4,17 +4,20 @@ import org.example.schedulerproject.dto.ScRequestDto;
 import org.example.schedulerproject.dto.ScResponseDto;
 import org.example.schedulerproject.entity.Scheduler;
 import org.example.schedulerproject.repository.SchedulerRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.tree.RowMapper;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
 
-    private final SchedulerRepository SchedulerRepository;
+    private final SchedulerRepository schedulerRepository;
 
     public SchedulerServiceImpl(SchedulerRepository schedulerRepository) {
-        this.SchedulerRepository = schedulerRepository;
+        this.schedulerRepository = schedulerRepository;
     }
 
     // 생성
@@ -23,14 +26,32 @@ public class SchedulerServiceImpl implements SchedulerService {
         // 요청 받은 데이터를 Entity로 변환.
         Scheduler scheduler = new Scheduler(dto.getName(), dto.getContents(), dto.getPassword());
 
-        return SchedulerRepository.addSchedule(scheduler);
+        return schedulerRepository.addSchedule(scheduler);
     }
 
-    // 전체조회
+    // 전체 조회
     @Override
-    public ScResponseDto findAll() {
-
-        return SchedulerRepository.findAll();
+    public List<ScResponseDto> findAll() {
+        return schedulerRepository.findAll();
     }
 
+    // 단건 조회
+    @Override
+    public ScResponseDto findById(Long id) {
+        return schedulerRepository.findByid(id);
+    }
+
+    // 수정
+
+
+    // 삭제
+    @Override
+    public void deleteSchedule(Long id) {
+
+        int deletedRow = schedulerRepository.deleteSchedule(id);
+
+        if (deletedRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
 }

@@ -28,4 +28,5 @@ public class Scheduler {
         this.password = password;
         this.createdAt = LocalDateTime.now();
     }
+
 }

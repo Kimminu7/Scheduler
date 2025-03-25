@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/schedules")
 public class ScheduleController {
@@ -26,13 +28,25 @@ public class ScheduleController {
 
     // 전체 조회
     @GetMapping
-    public ResponseEntity<ScResponseDto> findAll() {
+    public List<ScResponseDto> findAll() {
 
-        return new ResponseEntity<>(schedulerService.findAll(), HttpStatus.OK);
+        return schedulerService.findAll();
     }
     // 단건 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<ScResponseDto> findById(@PathVariable Long id) {
+
+        return new ResponseEntity<>(schedulerService.findById(id), HttpStatus.OK);
+    }
+
 
     // 수정
 
+
     // 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id) {
+        schedulerService.deleteSchedule(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
