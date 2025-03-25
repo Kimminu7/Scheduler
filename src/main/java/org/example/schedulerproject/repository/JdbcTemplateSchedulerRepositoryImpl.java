@@ -3,14 +3,14 @@ package org.example.schedulerproject.repository;
 import org.example.schedulerproject.dto.ScResponseDto;
 import org.example.schedulerproject.entity.Scheduler;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
 import javax.sql.DataSource;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.PreparedStatement;
+import java.util.List;
+
 
 @Repository
 public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository {
@@ -23,28 +23,31 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
     // 생성 INSERT
     @Override
     public ScResponseDto addSchedule(Scheduler scheduler) {
-        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-
-        jdbcInsert.withTableName("scheduler").usingGeneratedKeyColumns("id");
-
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("title", scheduler.getName());
-        parameters.put("contents", scheduler.getContents());
-        parameters.put("password", scheduler.getPassword());
-        parameters.put("createdAt", scheduler.getCreatedAt());
-        parameters.put("updatedAt", scheduler.getUpdatedAt());
-
-        Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
-
-        return new ScResponseDto(key.longValue(), scheduler.getName(), scheduler.getContents(), LocalDateTime.now(), LocalDateTime.now());
+        String sql = "INSERT INTO scheduler (name, contents, password) VALUES(?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
+            ps.setString(1, scheduler.getName());
+            ps.setString(2, scheduler.getContents());
+            ps.setString(3, scheduler.getPassword());
+            return ps;
+        }, keyHolder);
+        long key = keyHolder.getKey().longValue();
+        scheduler.setId(key);
 
         // TODO 리턴 해줄것
-        //return null;
+        return new ScResponseDto(key, scheduler.getName(), scheduler.getContents());
+        //"INSERT INTO schedulers (name, contents, password)   VALUES (?, ? ,?)"
     }
 
 
-
     // 전체 조회
+    @Override
+    public ScResponseDto findAll() {
+        String sql = "SELECT * FROM scheduler";
+
+        return null;
+    }
     // "SELECT * FROM scheduler"
 
 
@@ -100,4 +103,15 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
 //    }
 //
 
+    private RowMapper<Scheduler> schedulerRowMapper() {
+        return (rs, rowNum) -> {
+            Scheduler scheduler = new Scheduler();
+            scheduler.setId(rs.getLong("id"));
+            scheduler.setName(rs.getString("name"));
+            scheduler.setPassword(rs.getString("password"));
+            scheduler.setCreatedAt(rs.getTimestamp("createdAt").toLocalDateTime());
+            scheduler.setUpdatedAt(rs.getTimestamp("updatedAt").toLocalDateTime());
+            return scheduler;
+        };
+    }
 }

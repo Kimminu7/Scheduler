@@ -5,15 +5,18 @@ import org.example.schedulerproject.dto.ScResponseDto;
 
 public interface SchedulerService {
 
-    // 스케줄 생성
+    //  생성
     ScResponseDto addSchedule(ScRequestDto dto);
 
-    // 스케줄 조회
+    //  전체 조회
+    ScResponseDto findAll();
+
+    //  단건 조회
 
 
-    // 스케줄 수정
+    //  수정
 
 
-    // 스케줄 삭제
+    //  삭제
 
 }

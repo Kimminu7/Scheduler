@@ -9,6 +9,9 @@ public interface SchedulerRepository {
     ScResponseDto addSchedule(Scheduler scheduler);
 
     // 메모를 조회하는 Select
+    ScResponseDto findAll();
+
+    // 메모를 조회하는 Select
 
 
     // 메모를 수정하는 Update

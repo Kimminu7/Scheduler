@@ -14,7 +14,7 @@ public class ScResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ScResponseDto(Long id, String name, String contents, LocalDateTime createdAt, LocalDateTime now) {
+    public ScResponseDto(Long id, String name, String contents) {
         this.id = id;
         this.name = name;
         this.contents = contents;

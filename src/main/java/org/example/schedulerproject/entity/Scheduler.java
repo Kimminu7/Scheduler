@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Scheduler {
+
 
     private Long id;
     private String name;
@@ -26,5 +28,4 @@ public class Scheduler {
         this.password = password;
         this.createdAt = LocalDateTime.now();
     }
-
 }
