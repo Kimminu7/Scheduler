@@ -43,7 +43,7 @@
     SchedulerProjectApplicationTests.java
 ```
 
-## 필수
+## ⭐ 필수
 ### Lv 0. API 명세 및 ERD 작성
 
 #### ※ 일정 관리 API 명세서
