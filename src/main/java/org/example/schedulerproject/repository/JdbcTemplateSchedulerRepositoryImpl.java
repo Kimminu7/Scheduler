@@ -22,7 +22,7 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    // 생성 INSERT
+    // 생성 INSERT ( 구글링 )
     //"INSERT INTO schedulers (name, contents, password)   VALUES (?, ? ,?)"
     @Override
     public ScResponseDto addSchedule(Scheduler scheduler) {
@@ -47,7 +47,7 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
     // "SELECT * FROM scheduler"
     @Override
     public List<ScResponseDto> findAll() {
-
+        // 배열 형태로 반환 ( 전체 ) .query문은 조회할때만 사용
         return jdbcTemplate.query("SELECT * FROM scheduler", schedulerRowMapper());
     }
 
@@ -56,6 +56,7 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
     // "SELECT * FROM scheduler WHERE id = ?"
     @Override
     public ScResponseDto findById(Long id) {
+        // 한건만 조회 하고 싶은경우 똑같이 .queryForObject 형식으로 사용.
         return jdbcTemplate.queryForObject("SELECT * FROM scheduler WHERE id = ?", schedulerRowMapper(), id);
     }
 
@@ -65,7 +66,7 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
     public String editSchedule(Scheduler updatedSchedule) {
         String sql = "UPDATE scheduler SET name = ?, contents = ?, password = ? WHERE id = ?";
         int result = jdbcTemplate.update(sql,
-                ps -> {
+                ps -> { // 숫자는 위 SQL문의 ?와 매칭됨
                     ps.setString(1, updatedSchedule.getName());
                     ps.setString(2, updatedSchedule.getContents());
                     ps.setString(3, updatedSchedule.getPassword());
@@ -92,14 +93,14 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
          * jdbcTemplate.update(sql, ...);
          */
 
-
+    // JDBC 에서 활용하는 RowMapper 클래스
     private RowMapper<ScResponseDto> schedulerRowMapper() {
 
         return new RowMapper<ScResponseDto>() {
             @Override
             public ScResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new ScResponseDto(
-                        rs.getLong("id"),
+                        rs.getLong("id"),  // 이때 해당 DB 컬럼명에 맞게 작성해야함.
                         rs.getString("name"),
                         rs.getString("contents"),
                         rs.getTimestamp("created_at").toLocalDateTime(),

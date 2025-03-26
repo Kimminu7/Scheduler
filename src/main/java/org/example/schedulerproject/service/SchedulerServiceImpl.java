@@ -15,8 +15,10 @@ import java.util.List;
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
 
+    // 레포지토리
     private final SchedulerRepository schedulerRepository;
 
+    // 레포지토리 생성
     public SchedulerServiceImpl(SchedulerRepository schedulerRepository) {
         this.schedulerRepository = schedulerRepository;
     }
@@ -46,6 +48,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Override
     public String editSchedule(Long id, String name, String contents, String password) {
 
+        // 수정해야 할 DB에 이미 저장되어있는 id값을 가져옴.
         ScResponseDto findScheduler = schedulerRepository.findById(id);
         Scheduler updatedSchedule = new Scheduler(findScheduler.getId(), name, contents, password);
 

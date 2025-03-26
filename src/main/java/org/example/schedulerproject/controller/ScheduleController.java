@@ -13,8 +13,10 @@ import java.util.List;
 @RequestMapping("/api/schedules")
 public class ScheduleController {
 
+    // 서비스
     private final SchedulerService schedulerService;
 
+    // 서비스 생성
     public ScheduleController(SchedulerService schedulerService) {
         this.schedulerService = schedulerService;
     }
