@@ -93,7 +93,7 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
          * jdbcTemplate.update(sql, ...);
          */
 
-    // JDBC 에서 활용하는 RowMapper 클래스
+    // RowMapper는 스프링 JDBC에서 제공하는 인터페이스로, SQL 결과(ResultSet)를 Java 객체로 매핑하는 데 사용됨
     private RowMapper<ScResponseDto> schedulerRowMapper() {
 
         return new RowMapper<ScResponseDto>() {
@@ -109,5 +109,4 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
             }
         };
     }
-
 }
