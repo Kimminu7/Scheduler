@@ -23,6 +23,7 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
     }
 
     // 생성 INSERT
+    //"INSERT INTO schedulers (name, contents, password)   VALUES (?, ? ,?)"
     @Override
     public ScResponseDto addSchedule(Scheduler scheduler) {
         String sql = "INSERT INTO scheduler (name, contents, password) VALUES(?, ?, ?)";
@@ -40,7 +41,6 @@ public class JdbcTemplateSchedulerRepositoryImpl implements SchedulerRepository 
 
         // TODO 리턴 해줄것
         return new ScResponseDto(key, scheduler.getName(), scheduler.getContents());
-        //"INSERT INTO schedulers (name, contents, password)   VALUES (?, ? ,?)"
     }
 
     // 전체 조회
